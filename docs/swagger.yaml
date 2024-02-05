@@ -1,0 +1,250 @@
+swagger: "2.0"
+info:
+  version: 0.0.1
+  title: Vuelt
+tags:
+  - name: auth
+    description: Everything about authentication and authorization
+  - name: course
+    description: Everything about your courses
+  - name: homework
+    description: Everything about your homeworks
+  - name: scheduler
+    description: Everything about scheduling
+  - name: analytic
+    description: Everything about statistics
+schemes:
+  - https
+  - http
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - auth
+      summary: Sign up new user with provided credentials
+      operationId: auth-sign-up
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: credentials
+          in: body
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                example: dummy@email.com
+              username:
+                type: string
+                pattern: "[0-9a-z-]+"
+                example: dummy-username
+              password:
+                type: string
+                format: password
+            required:
+              - email
+              - username
+              - password
+          required: true
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              uuid:
+                type: string
+                format: uuid
+        "400":
+          description: Invalid request
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              details:
+                type: object
+  /auth/signin:
+    post:
+      tags:
+        - auth
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              details:
+                type: object
+  /course:
+    post:
+      tags:
+        - course
+      parameters:
+        - name: course
+          in: body
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: 101. Discrete Math
+              description:
+                type: string
+                example: |-
+                  Broadly speaking, discrete math is math that uses discrete numbers, or integers, meaning there are no fractions or decimals involved.
+                  In this course, you'll learn about proofs, binary, sets, sequences, induction, recurrence relations, and more!
+              professor:
+                type: string
+                format: uuid
+            required:
+              - title
+              - description
+              - professor
+          description: ID of pet to update
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              details:
+                type: object
+  /course/my:
+    post:
+      tags:
+        - course
+      parameters:
+        - name: requets
+          in: body
+          schema:
+            type: string
+            example: "user123"
+          description: User id to get courses
+          required: true
+      responses:
+        "200":
+          description: successful operation
+  /course/all:
+    post:
+      tags:
+        - course
+      responses:
+        "200":
+          description: successful operation
+  /course/{uuid}:
+    post:
+      tags:
+        - course
+      responses:
+        "200":
+          description: successful operation
+  /course/enroll/{uuid}:
+    post:
+      tags:
+        - course
+      responses:
+        "200":
+          description: successful operation
+  /course/leave/{uuid}:
+    post:
+      tags:
+        - course
+      responses:
+        "200":
+          description: successful operation
+  /course/expell/{uuid}:
+    post:
+      tags:
+        - course
+      responses:
+        "200":
+          description: successful operation
+  /homework:
+    post:
+      tags:
+        - homework
+      responses:
+        "200":
+          description: successful operation
+  /homework/my:
+    post:
+      tags:
+        - homework
+      responses:
+        "200":
+          description: successful operation
+  /homework/{uuid}:
+    post:
+      tags:
+        - homework
+      responses:
+        "200":
+          description: successful operation
+  /homework/send/{uuid}:
+    post:
+      tags:
+        - homework
+      responses:
+        "200":
+          description: successful operation
+  /homework/rate/{uuid}:
+    post:
+      tags:
+        - homework
+      responses:
+        "200":
+          description: successful operation
+  /schedule/course/publish/{uuid}:
+    post:
+      tags:
+        - scheduler
+      responses:
+        "200":
+          description: successful operation
+  /schedule/homework/publish/{uuid}:
+    post:
+      tags:
+        - scheduler
+      responses:
+        "200":
+          description: successful operation
+  /schedule/homework/deadline/{uuid}:
+    post:
+      tags:
+        - scheduler
+      responses:
+        "200":
+          description: successful operation
+  /analytic/course/{uuid}:
+    post:
+      tags:
+        - analytic
+      responses:
+        "200":
+          description: successful operation
+  /analytic/homework/{uuid}:
+    post:
+      tags:
+        - analytic
+      responses:
+        "200":
+          description: successful operation
+externalDocs:
+  description: Find out more about Swagger
+  url: "http://swagger.io"
