@@ -8,3 +8,11 @@ erl_crash.dump
 *.beam
 /config/*.secret.exs
 .elixir_ls/
+
+# vscode ide files
+.vscode/ 
+
+# webpack result bundles
+ui/dist
+# npm modules (will create after `npm start`)
+ui/node_modules
